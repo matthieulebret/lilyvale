@@ -25,14 +25,11 @@ st.title('Lilyvale solar farm generation analysis')
 st.image('https://mediacdn.acciona.com/media/zqelbp41/lilyvale-medidas.jpg')
 
 # ###### Generation by project ####
-@st.cache(suppress_st_warning=True,allow_output_mutation=True)
-def getdata():
-    dispatch = pd.read_csv('data_lily.csv',parse_dates=['SETTLEMENTDATE'],dtype={'DUID':'string','SCADAVALUE':'float64'}).iloc[:,1:]
-    dispatch.columns=['Time','Project','Dispatch']
-    dispatch['Time'] = pd.to_datetime(dispatch['Time'],errors='coerce')
-    return dispatch
+dispatch = pd.read_csv('data_lily.csv',parse_dates=['SETTLEMENTDATE'],dtype={'DUID':'string','SCADAVALUE':'float64'}).iloc[:,1:]
+dispatch.columns=['Time','Project','Dispatch']
+dispatch['Time'] = pd.to_datetime(dispatch['Time'],errors='coerce')
 
-lily = getdata()
+lily = dispatch
 
 
 freqlist = ['5min','30min','1H','3H','6h','12H','D','W','M','Q']
