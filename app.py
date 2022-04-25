@@ -28,14 +28,12 @@ st.image('https://mediacdn.acciona.com/media/zqelbp41/lilyvale-medidas.jpg')
 @st.cache(suppress_st_warning=True,allow_output_mutation=True)
 def getdata():
     dispatch = pd.read_csv('data_lily.csv',parse_dates=['SETTLEMENTDATE'],dtype={'DUID':'string','SCADAVALUE':'float64'}).iloc[:,1:]
+    dispatch.columns=['Time','Project','Dispatch']
+    dispatch['Time'] = pd.to_datetime(dispatch['Time'],errors='coerce')
     return dispatch
 
 lily = getdata()
 
-lily.reset_index(inplace=True)
-
-lily.columns=['Time','Project','Dispatch']
-lily['Time'] = pd.to_datetime(lily['Time'],errors='coerce')
 
 freqlist = ['5min','30min','1H','3H','6h','12H','D','W','M','Q']
 
